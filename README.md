@@ -143,7 +143,6 @@ It seems like Hidden Valley ranch is a an overwhelming favorite, while other pop
 This section details the model used to predict whether a recipe is high or low in protein content. This is framed as a binary classification problem, where the target variable indicates whether a recipe's protein content surpasses a predefined threshold (the median protein content in the dataset)
 
 ## Baseline Model
-
 #### Model Selection and Rationale:
 
 Given the nature of the problem (binary classification), a Logistic Regression model was selected as a baseline. Logistic Regression, being a linear model, offers interpretability and computational efficiency, making it suitable for initial exploration and baseline performance assessment.  Given the potential for class imbalances, we used a `OneVsRestClassifier` which trains a separate binary classifier for each class (high and low protein) and incorporates `class_weight='balanced'` to weigh the classes in proportion to their representation in the training dataset. The solver was set to `liblinear` to help prevent the issue of infinite loops.  A maximum iteration limit of 10,000 was also used (`max_iter = 10000`).
@@ -185,5 +184,56 @@ The model achieves the following performance metrics:
 
 #### Confusion Matrix:
 
-![Alt text](assets/confusion_matrix.jpg)
+![Confusion Matrix](assets/confusion_matrix.jpg)
+
+## Final Model
+
+This section details the final model developed to predict high versus low protein content in recipes, building upon the baseline model's foundation.  The goal was to improve predictive accuracy while addressing potential limitations of the baseline model, such as its inability to capture non-linear relationships between features.  Given the computational challenges with one-hot encoding on the ingredients data, this model only uses the numerical features.
+
+
+#### Model Selection and Rationale:
+
+A `RandomForestClassifier` was selected for the final model. Random Forests handle non-linear relationships well and are less prone to overfitting than a single linear model.
+
+#### Feature Engineering:
+
+Two new features were engineered to improve predictive accuracy:
+
+-  `carbohydrate_ratio`:  (carbohydrates) / (carbohydrates + total_fat + protein)
+-  `fat_protein_ratio`: total_fat / protein (handled division by zero)
+
+#### Model Pipeline:
+
+The final model utilizes a pipeline that incorporates:
+
+-  **Data Preprocessing:** `StandardScaler` is applied to the numerical features.
+-  **Model Training:** A `RandomForestClassifier` is trained, with hyperparameters tuned using `GridSearchCV`.
+
+#### Hyperparameter Tuning:
+
+`GridSearchCV` was used to optimize the following hyperparameters:
+
+-   `max_depth`
+-   `min_samples_split`
+-   `n_estimators`
+
+The best hyperparameters were selected by maximizing the F1-score using 3-fold cross-validation.
+
+**Best Hyperparameters:** `{'classifier__max_depth': None, 'classifier__min_samples_split': 5, 'classifier__n_estimators': 100}`
+
+#### Model Performance Results:
+
+The final model demonstrates a significant improvement over the baseline:
+
+-   **F1-score:** 0.9986
+-   **Accuracy:** 0.9986
+
+#### Confusion Matrix:
+
+![Final Confusion Matrix](assets/final_confusion_matrix.png)
+
+#### Model Assessment
+
+The final model exhibits exceptionally high performance. This improvement over the baseline suggests that the engineered features capture important non-linear relationships and that the `RandomForestClassifier` is well-suited to this task.  However, the near-perfect scores warrant further investigation to rule out overfitting.  The confusion matrix (included below) provides a visual representation of the model's performance.
+
 
