@@ -185,7 +185,7 @@ The model achieves the following performance metrics:
 
 ## Final Model
 
-This section details the final model developed to predict high versus low protein content in recipes, building upon the baseline model's foundation.  The goal was to improve predictive accuracy while addressing potential limitations of the baseline model, such as its inability to capture non-linear relationships between features.  Given the computational challenges with one-hot encoding on the ingredients data, this model only uses the numerical features.
+This section details the final model developed to predict high versus low protein content in recipes, building upon the baseline model's foundation.  The goal was to improve predictive accuracy while addressing potential limitations of the baseline model, such as its inability to capture non-linear relationships between features.  
 
 
 #### Model Selection and Rationale:
