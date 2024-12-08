@@ -1,5 +1,4 @@
 # Recipes, Ratings, & Regression
-An analysis report by Jad Alaoui
 
 ## Introduction
 
