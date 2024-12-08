@@ -152,17 +152,14 @@ Given the nature of the problem (binary classification), a Logistic Regression m
 
 The features used for prediction include:
 
-*   **Quantitative Features:** `carbohydrates` and `total_fat` (2 features)
-*   **Categorical Features:** `ingredients` (one-hot encoded)
-
-The `ingredients` feature, representing a list of ingredients for each recipe, required preprocessing using One-Hot Encoding to create a numerical representation suitable for the Logistic Regression model. Each unique ingredient becomes a separate binary feature (0 or 1) indicating the presence or absence of that ingredient.  
+*   **Quantitative Features:** `carbohydrates` and `total_fat` (2 
 
 
 #### Model Pipeline:
 
 To streamline the model building process, a pipeline was employed which incorporates the following steps:
 
--  **Data Preprocessing:** A `ColumnTransformer` is utilized to apply the `OneHotEncoder` to the `ingredients` column and `StandardScaler` to the numerical features (`carbohydrates` and `total_fat`).
+-  **Data Preprocessing:** A `ColumnTransformer` is utilized to apply the`StandardScaler` to the numerical features (`carbohydrates` and `total_fat`).
 -  **Model Training:** A `OneVsRestClassifier` wrapper was used to train a logistic regression model that handles binary classification problems.
 
 
