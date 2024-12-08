@@ -1,4 +1,4 @@
-# Recipes, Ratings, & Regression
+# Praise, Protein, & Predictions
 
 ## Introduction
 
@@ -137,3 +137,53 @@ Popular tags were also an area of interest for me, so I decided to explode the t
 It seems like Hidden Valley ranch is a an overwhelming favorite, while other popular tags include cuisine names, ingredients and holidays/religious observances *(Moroccan made the list which, while it has no influence on my analysis, is huge for the program)*.
 
 ## Prediction Problem
+
+#### Regression to Predict Protein Content
+
+This section details the model used to predict whether a recipe is high or low in protein content. This is framed as a binary classification problem, where the target variable indicates whether a recipe's protein content surpasses a predefined threshold (the median protein content in the dataset)
+
+## Baseline Model
+
+#### Model Selection and Rationale:
+
+Given the nature of the problem (binary classification), a Logistic Regression model was selected as a baseline. Logistic Regression, being a linear model, offers interpretability and computational efficiency, making it suitable for initial exploration and baseline performance assessment.  Given the potential for class imbalances, we used a `OneVsRestClassifier` which trains a separate binary classifier for each class (high and low protein) and incorporates `class_weight='balanced'` to weigh the classes in proportion to their representation in the training dataset. The solver was set to `liblinear` to help prevent the issue of infinite loops.  A maximum iteration limit of 10,000 was also used (`max_iter = 10000`).
+
+
+#### Feature Engineering and Selection:
+
+The features used for prediction include:
+
+*   **Quantitative Features:** `carbohydrates` and `total_fat` (2 features)
+*   **Categorical Features:** `ingredients` (one-hot encoded)
+
+The `ingredients` feature, representing a list of ingredients for each recipe, required preprocessing using One-Hot Encoding to create a numerical representation suitable for the Logistic Regression model. Each unique ingredient becomes a separate binary feature (0 or 1) indicating the presence or absence of that ingredient.  
+
+
+#### Model Pipeline:
+
+To streamline the model building process, a pipeline was employed which incorporates the following steps:
+
+-  **Data Preprocessing:** A `ColumnTransformer` is utilized to apply the `OneHotEncoder` to the `ingredients` column and `StandardScaler` to the numerical features (`carbohydrates` and `total_fat`).
+-  **Model Training:** A `OneVsRestClassifier` wrapper was used to train a logistic regression model that handles binary classification problems.
+
+
+#### Model Evaluation:
+
+The model's performance is evaluated using the following metrics:
+
+-   **F1-score:** A balanced measure considering both precision and recall, particularly important in addressing potential class imbalances.
+-   **Accuracy:** The overall correctness of the model's predictions.
+-   **Confusion Matrix:** A visual representation of the model's performance, showing the counts of true positives, true negatives, false positives, and false negatives.
+-   **Classification Report:** Detailed breakdown of precision, recall, F1-score, and support for each class (high and low protein).
+
+#### Model Performance Results:
+
+The model achieves the following performance metrics:
+
+*   **F1-score:** 0.68
+*   **Accuracy:** 0.71
+
+#### Confusion Matrix:
+
+![Alt text](assets/confusion_matrix.jpg)
+
