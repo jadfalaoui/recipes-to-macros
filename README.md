@@ -135,6 +135,6 @@ Popular tags were also an area of interest for me, so I decided to explode the t
 | melons                | 4.72 | 185   |
 
 
-It seems like Hidden Valley ranch is a an overwhelming favorite, while other popular tags include cuisine names, ingredients and holidays/religious observances ("Moroccan made the list which, to be frank, is huge for the program").
+It seems like Hidden Valley ranch is a an overwhelming favorite, while other popular tags include cuisine names, ingredients and holidays/religious observances *(Moroccan made the list which, while it has no influence on my analysis, is huge for the program)*.
 
 ## Prediction Problem
